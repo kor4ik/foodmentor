@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <SignUp/>
+    <SignIn/>
   </v-app>
 </template>
 
 <script>
-import SignUp from './components/SignUp.vue'
+import SignIn from './components/SignIn.vue'
 
 export default {
   name: 'App',
   data: () => ({
   //
   }),
-  components: { SignUp }
+  components: { SignIn }
 }
 </script>
