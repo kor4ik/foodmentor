@@ -12,7 +12,7 @@
           placeholder="Enter your password">
         </v-text-field>
         <br>
-        <v-btn :disabled="!form" :loading="loading" block color="darken" size="large" type="submit" variant="elevated">
+        <v-btn :disabled="!form" :loading="loading" block size="large" type="submit" variant="elevated">
           Sign In
         </v-btn>
       </v-form>
