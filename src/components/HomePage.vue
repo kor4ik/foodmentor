@@ -1,0 +1,11 @@
+<template>
+    <h1 class="py-4 text-lg-h4 text-black">
+      Welcome to your food planner :)
+    </h1>
+</template>
+
+<script>
+export default {
+  name: 'HomePage'
+}
+</script>

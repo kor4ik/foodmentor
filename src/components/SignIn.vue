@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="bg-deep-purple-lighten-2 text-center" height=100%>
+  <v-sheet class="bg-deep-purple-lighten-2 text-center" height="100%">
     <h1 class="py-4 text-lg-h4 text-black">
       foodmentor
     </h1>
@@ -44,6 +44,7 @@ export default {
         localStorage.setItem('user-data', JSON.stringify(result.data))
         this.loading = false
         // console.log('User:', this.email, 'createed with data', result)
+        this.$router.push({ name: 'HomePage' })
       }
     },
     requiredRule (v) {
@@ -59,6 +60,7 @@ export default {
           email: v
         }
       })
+        .catch((err) => console.log(err))
       return !result.data.length || 'E-mail already exists'
     }
   }
