@@ -5,10 +5,10 @@
     </h1>
     <v-card class="mx-auto px-6 py-8" max-width="344">
       <v-form v-model="form" @submit.prevent="onSubmit" padding>
-        <v-text-field v-model="email" :readonly="loading" :rules="[requiredRule, emailRule, uniqueRule]" class="mb-2" clearable
+        <v-text-field v-model="email" :readonly="loading" :rules="[requiredRule, emailRule]" class="mb-2" clearable
           label="Email" variant="outlined">
         </v-text-field>
-        <v-text-field v-model="password" type="password" :readonly="loading" :rules="[requiredRule]" clearable label="Password" variant="outlined"
+        <v-text-field v-model="password" type="password" :readonly="loading" :rules="[requiredRule, uniqueRule]" clearable label="Password" variant="outlined"
           placeholder="Enter your password">
         </v-text-field>
         <br>
@@ -29,23 +29,28 @@ export default {
     form: false,
     email: null,
     password: null,
-    loading: false
+    loading: false,
+    uniqueVal: null
   }),
   methods: {
     async onSubmit () {
       if (!this.form) return
       this.loading = true
-      const result = await axios.post('http://localhost:3000/users', {
-        email: this.email,
-        password: this.password
-      })
-        .catch((err) => alert(err))
-      if (result.status === 201) {
+
+      if (!this.uniqueVal) {
+        const result = await axios.post('http://localhost:3000/users', {
+          email: this.email,
+          password: this.password
+        })
+          .catch((err) => alert(err))
         localStorage.setItem('user-data', JSON.stringify(result.data))
-        this.loading = false
-        // console.log('User:', this.email, 'createed with data', result)
-        this.$router.push({ name: 'HomePage' })
+        console.log('User:', this.email, 'createed with data', result)
+      } else {
+        localStorage.setItem('user-data', JSON.stringify(this.uniqueVal.data))
+        console.log('User:', this.email, 'loged with data', this.uniqueVal.data)
       }
+      this.$router.push({ name: 'HomePage' })
+      this.loading = false
     },
     requiredRule (v) {
       return !!v || 'Field is required'
@@ -57,11 +62,28 @@ export default {
     async uniqueRule (v) {
       const result = await axios.get('http://localhost:3000/users', {
         params: {
-          email: v
+          email: this.email
         }
       })
         .catch((err) => console.log(err))
-      return !result.data.length || 'E-mail already exists'
+      if (result.data.length) {
+        const result = await axios.get('http://localhost:3000/users', {
+          params: {
+            email: this.email,
+            password: v
+          }
+        })
+          .catch((err) => console.log(err))
+        this.uniqueVal = result
+        return !!result.data.length || "Password doesn't match e-mail"
+      }
+      return true
+    }
+  },
+  mounted () {
+    const user = localStorage.getItem('user-data')
+    if (user) {
+      this.$router.push({ name: 'HomePage' })
     }
   }
 }
