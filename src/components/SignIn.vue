@@ -4,15 +4,37 @@
       foodmentor
     </h1>
     <v-card class="mx-auto px-6 py-8" max-width="344">
-      <v-form v-model="form" @submit.prevent="onSubmit" padding>
-        <v-text-field v-model="email" :readonly="loading" :rules="[requiredRule, emailRule]" class="mb-2" clearable
-          label="Email" variant="outlined">
-        </v-text-field>
-        <v-text-field v-model="password" type="password" :readonly="loading" :rules="[requiredRule, uniqueRule]" clearable label="Password" variant="outlined"
-          placeholder="Enter your password">
-        </v-text-field>
+      <v-form
+        v-model="form"
+        @submit.prevent="onSubmit"
+      >
+        <v-text-field
+          v-model="email"
+          :readonly="loading"
+          :rules="[requiredRule, emailRule]"
+          class="mb-2"
+          clearable
+          label="Email"
+          variant="outlined"
+        />
+        <v-text-field
+          v-model="password"
+          type="password"
+          :readonly="loading"
+          :rules="[requiredRule, uniqueRule]"
+          clearable
+          label="Password"
+          variant="outlined"
+          placeholder="Enter your password"
+        />
         <br>
-        <v-btn :disabled="!form" :loading="loading" block size="large" type="submit" variant="elevated">
+        <v-btn
+          :disabled="!form"
+          :loading="loading"
+          block size="large"
+          type="submit"
+          variant="elevated"
+        >
           Sign In
         </v-btn>
       </v-form>
@@ -40,16 +62,20 @@ export default {
       if (!this.uniqueVal) {
         const result = await axios.post('http://localhost:3000/users', {
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.email.split('@')[0],
+          gender: null,
+          weight: null
         })
           .catch((err) => alert(err))
         localStorage.setItem('user-data', JSON.stringify(result.data))
         console.log('User:', this.email, 'createed with data', result)
+        this.$router.push({ name: 'TargetPage' })
       } else {
-        localStorage.setItem('user-data', JSON.stringify(this.uniqueVal.data))
+        localStorage.setItem('user-data', JSON.stringify(this.uniqueVal.data[0]))
         console.log('User:', this.email, 'loged with data', this.uniqueVal.data)
+        this.$router.push({ name: 'MenuPage' })
       }
-      this.$router.push({ name: 'HomePage' })
       this.loading = false
     },
     requiredRule (v) {
@@ -83,7 +109,7 @@ export default {
   mounted () {
     const user = localStorage.getItem('user-data')
     if (user) {
-      this.$router.push({ name: 'HomePage' })
+      this.$router.push({ name: 'TargetPage' })
     }
   }
 }
