@@ -78,7 +78,7 @@ export default {
           localStorage.setItem('user-data', JSON.stringify(response.data))
         })
         .catch((err) => alert(err))
-      this.$router.push({ name: 'MenuPage' })
+      this.$router.push({ name: 'MenuCompose' })
       this.loading = false
     },
     requiredRule (v) {

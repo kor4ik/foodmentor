@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SignIn from '@/components/SignIn.vue'
 import TargetPage from '@/components/TargetPage.vue'
-import MenuPage from '@/components/MenuPage.vue'
+import MealCard from '@/components/MealCard.vue'
+import MenuCompose from '@/views/MenuCompose.vue'
 
 const routes = [
   {
@@ -20,8 +21,13 @@ const routes = [
   },
   {
     path: '/menu',
-    name: 'MenuPage',
-    component: MenuPage
+    name: 'MealCard',
+    component: MealCard
+  },
+  {
+    path: '/compose',
+    name: 'MenuCompose',
+    component: MenuCompose
   }
 ]
 
