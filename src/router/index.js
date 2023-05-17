@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SignIn from '@/components/SignIn.vue'
-import TargetPage from '@/components/TargetPage.vue'
+import TargetPage from '@/views/TargetPage.vue'
 import MealCard from '@/components/MealCard.vue'
 import MenuCompose from '@/views/MenuCompose.vue'
 

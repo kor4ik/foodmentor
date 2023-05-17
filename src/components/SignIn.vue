@@ -60,7 +60,7 @@ export default {
       this.loading = true
 
       if (!this.uniqueVal) {
-        const result = await axios.post('http://localhost:3000/users', {
+        const result = await axios.post('http://192.168.68.132:3000/users', {
           email: this.email,
           password: this.password,
           name: this.email.split('@')[0],
@@ -86,14 +86,14 @@ export default {
       return 'E-mail must be valid'
     },
     async uniqueRule (v) {
-      const result = await axios.get('http://localhost:3000/users', {
+      const result = await axios.get('http://192.168.68.132:3000/users', {
         params: {
           email: this.email
         }
       })
         .catch((err) => console.log(err))
       if (result.data.length) {
-        const result = await axios.get('http://localhost:3000/users', {
+        const result = await axios.get('http://192.168.68.132:3000/users', {
           params: {
             email: this.email,
             password: v

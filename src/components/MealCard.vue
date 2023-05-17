@@ -5,21 +5,20 @@
         <v-col
           v-for="n in 3"
           :key="n"
-          cols="12"
-          md="4"
+          cols="4"
         >
           <v-item v-slot="{ isSelected, selectedClass, toggle }">
             <v-card
               :class="['d-flex align-center', selectedClass]"
+              elevation="10"
               dark
-              height="200"
+              height="300"
               @click="toggle"
             >
               <div
                 class="text-h3 flex-grow-1 text-center"
-                elevation="5"
               >
-                {{ isSelected ? 'composing' : 'my meal' }}
+                {{ isSelected ? 'composing' : 'my meal my meal' }}
               </div>
             </v-card>
           </v-item>
@@ -33,7 +32,14 @@
 export default {
   name: 'MealCard',
   data: () => ({
-    model: null
+    model: null,
+    data: () => ({
+      items: [
+        'chicken',
+        'bread',
+        'apple'
+      ]
+    })
   })
 }
 </script>

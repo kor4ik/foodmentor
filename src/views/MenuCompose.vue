@@ -1,7 +1,6 @@
 <template>
-  <v-layout class="pa-15">
-    <AppBar/>
-    <h1>Daily Meals</h1>
+  <v-layout class="py-16 px-10">
+    <AppBar v-bind:title="title"/>
     <MealCard/>
   </v-layout>
 </template>
@@ -12,6 +11,9 @@ import MealCard from '@/components/MealCard.vue'
 
 export default {
   name: 'MenuCompose',
+  data: () => ({
+    title: 'My Daily Menu'
+  }),
   components: {
     AppBar,
     MealCard

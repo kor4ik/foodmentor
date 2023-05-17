@@ -1,50 +1,52 @@
 <template>
-  <v-card-title class="bg-deep-purple-lighten-2 px-9 pb-2">
-    <span class="text-h7">Hello {{ user.name }}, let's set the target</span>
-  </v-card-title>
-  <v-form class="pa-5"
-    v-model="form"
-    @submit.prevent="onSubmit"
-  >
-    <v-text-field
-      v-model="name"
-      type="name"
-      :readonly="loading"
-      :rules="[]"
-      clearable
-      label="Name"
-      placeholder="Enter your name"
-    />
-    <v-select
-        v-model="select"
-        :readonly="loading"
-        :items="items"
-        :rules="[requiredRule]"
-        label="Gender"
-      />
-    <v-text-field
-        v-model.number="weight"
-        type="weight"
-        :readonly="loading"
-        :rules="[requiredRule, weightRule]"
-        clearable
-        label="Target weight"
-        placeholder="Enter your target weight"
-      />
-    <v-btn class="me-4"
-      :disabled="!form"
-      :loading="loading"
-      type="submit"
-      variant="elevated"
-      elevation="5"
+  <v-layout class="py-16">
+    <AppBar v-bind:title="title"/>
+    <v-form class="pa-5"
+      v-model="form"
+      @submit.prevent="onSubmit"
     >
-      Submit
-    </v-btn>
-  </v-form>
+      <v-text-field
+        v-model="name"
+        type="name"
+        :readonly="loading"
+        :rules="[]"
+        clearable
+        label="Name"
+        placeholder="Enter your name"
+        width="1000"
+      />
+      <v-select
+          v-model="select"
+          :readonly="loading"
+          :items="items"
+          :rules="[requiredRule]"
+          label="Gender"
+        />
+      <v-text-field
+          v-model.number="weight"
+          type="weight"
+          :readonly="loading"
+          :rules="[requiredRule, weightRule]"
+          clearable
+          label="Target weight"
+          placeholder="Enter your target weight"
+        />
+      <v-btn class="me-4"
+        :disabled="!form"
+        :loading="loading"
+        type="submit"
+        variant="elevated"
+        elevation="5"
+      >
+        Submit
+      </v-btn>
+    </v-form>
+  </v-layout>
 </template>
 
 <script>
 import axios from 'axios'
+import AppBar from '@/components/AppBar.vue'
 
 export default {
   name: 'TargetPage',
@@ -52,6 +54,7 @@ export default {
     form: false,
     user: {},
     name: null,
+    title: null,
     weight: null,
     loading: false,
     select: null,
@@ -60,6 +63,9 @@ export default {
       'female'
     ]
   }),
+  components: {
+    AppBar
+  },
   methods: {
     async onSubmit () {
       if (!this.form) return
@@ -68,7 +74,7 @@ export default {
       if (this.name === null || this.name === '') {
         this.name = this.user.name
       }
-      await axios.patch('http://localhost:3000/users/' + this.user.id, {
+      await axios.patch('http://192.168.68.132:3000/users/' + this.user.id, {
         gender: this.select,
         name: this.name,
         weight: this.weight
@@ -94,6 +100,7 @@ export default {
     if (user) {
       this.user = JSON.parse(user)
       this.name = this.user.name
+      this.title = 'Hello ' + this.user.name + ", let's set the target"
       this.select = this.user.gender
       this.weight = this.user.weight
     } else {
@@ -102,3 +109,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .v-form {
+    width: 100%
+  }
+</style>
