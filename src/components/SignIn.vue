@@ -74,7 +74,7 @@ export default {
       } else {
         localStorage.setItem('user-data', JSON.stringify(this.uniqueVal.data[0]))
         console.log('User:', this.email, 'loged with data', this.uniqueVal.data)
-        this.$router.push({ name: 'MenuPage' })
+        this.$router.push({ name: 'MenuCompose' })
       }
       this.loading = false
     },

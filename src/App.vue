@@ -12,6 +12,5 @@ export default {
   data: () => ({
   //
   })
-  // components: { SignIn }
 }
 </script>

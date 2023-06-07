@@ -17,7 +17,7 @@
         <v-btn variant="text" icon="mdi-dots-vertical"></v-btn> -->
       </v-app-bar>
 
-      <v-navigation-drawer v-model="drawer" location="left" temporary>
+      <v-navigation-drawer v-model="drawer" location="left" temporary height="100%">
         <v-list :items="items"></v-list>
       </v-navigation-drawer>
 
